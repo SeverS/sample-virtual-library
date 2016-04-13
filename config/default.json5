@@ -1,0 +1,40 @@
+{
+	logsDirectory: 'logs',
+	serverHost: 'localhost',
+	serverPort: 8080,
+	useSSL: false, // starts a https server
+	// api prefix
+	api: {
+		prefix: 'v1',
+		minUsernameLength: 4, // don`t allow very short usernames
+		minPasswordLength: 4,
+		uniqueBookNames: true,
+		secret: 'shhh... it`s secret!'
+	},
+	apiPrefix: '/v1/',
+	orm: {
+		connections: {
+			// for development purposes. it will create a database file in .tmp/
+			localDisk: {
+				adapter: 'sails-disk'
+			},
+			// for MySQL
+			localMysql: {
+			    adapter: 'sails-mysql',
+			    host: 'example.com',
+			    port: '3306',
+			    user: 'root',
+			    password: 'toor',
+			    database: 'vitual_library'
+			}
+		},
+		defaultConnection: 'localDisk',
+		/**
+		 * Options:
+		 * 	 safe - never auto-migrate my database(s). I will do it myself (by hand)
+		 *   alter - auto-migrate, but attempt to keep my existing data (experimental)
+		 *	 drop - wipe/drop ALL my data and rebuild models every time I start server
+		 */
+		migrate: 'alter'
+	}
+}
