@@ -10,15 +10,14 @@ import fileStreamRotator from 'file-stream-rotator';
 import morgan from 'morgan';
 // configuration library
 import config from 'config';
-
+import debug from 'debug';
 // routes
 import router from './router';
 import errorHandler from 'errorhandler';
 import errorLogger from './utils/error-logger';
 
-const logsDir = path.join(__dirname, config.logsDirectory);
 const accessLog = fileStreamRotator.getStream({
-    filename: `${logsDir}/access-log-%DATE%.log`,
+    filename: `logs/access-log-%DATE%.log`,
     frequency: 'daily',
     verbose: false,
     date_format: 'YYYY-MM-DD'
@@ -45,7 +44,7 @@ const credentials = {
 };
 
 export function init() {
-  console.log('initializing server');
+  console.log('initializing server..');
 	if(config.useSSL) {
 		https.createServer(credentials, app)
 			 .listen(config.serverPort, config.serverHost, () => {

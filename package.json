@@ -4,7 +4,7 @@
   "description": "A sample project.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon bootstrap.js --exec babel-node --presets es2015,stage-2",
+    "start": "bash ./scripts/run.sh",
     "build": "babel -d dist",
     "serve": "node dist/bootstrap.js",
     "test": "mocha --compilers js:babel-register"

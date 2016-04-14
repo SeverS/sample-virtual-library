@@ -10,6 +10,7 @@ router.route('/client')
 
 // book endpoints
 router.route('/book')
+	.all(controllers.authorizationController)
 	.post(controllers.bookController.create)
 	.get(controllers.bookController.list);
 

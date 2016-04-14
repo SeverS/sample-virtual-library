@@ -1,5 +1,4 @@
 {
-	logsDirectory: 'logs',
 	serverHost: 'localhost',
 	serverPort: 8080,
 	useSSL: false, // starts a https server
@@ -8,6 +7,7 @@
 		prefix: 'v1',
 		minUsernameLength: 4, // don`t allow very short usernames
 		minPasswordLength: 4,
+		authorizeRequests: true,
 		uniqueBookNames: true,
 		secret: 'shhh... it`s secret!'
 	},

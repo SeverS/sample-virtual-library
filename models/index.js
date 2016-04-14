@@ -28,10 +28,11 @@ export function init() {
 	return new Promise((resolve, reject) => {
 		orm.loadCollection(Book);
 		orm.loadCollection(Client);
+		console.log('initializing orm...');
 		orm.initialize(ormOptions, (err, modelCollection) => {
 			if(err) return reject(err);
 			Object.keys(modelCollection.collections).forEach(modelKey => {
-				models[modelKey] = modelCollection.collections[modelKey]
+				models[modelKey] = modelCollection.collections[modelKey];
 			});
 			return resolve();
 		});
