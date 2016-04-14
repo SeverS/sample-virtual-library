@@ -2,6 +2,7 @@ import express from 'express';
 import http from 'http';
 import https from 'https';
 import fs from 'fs';
+import path from 'path';
 import Models from './models';
 import bodyParser from 'body-parser';
 // logging libs
@@ -15,9 +16,9 @@ import router from './router';
 import errorHandler from 'errorhandler';
 import errorLogger from './utils/error-logger';
 
-
+const logsDir = path.join(__dirname, config.logsDirectory);
 const accessLog = fileStreamRotator.getStream({
-    filename: `${config.logsDirectory}/access-log-%DATE%.log`,
+    filename: `${logsDir}/access-log-%DATE%.log`,
     frequency: 'daily',
     verbose: false,
     date_format: 'YYYY-MM-DD'
@@ -44,6 +45,7 @@ const credentials = {
 };
 
 export function init() {
+  console.log('initializing server');
 	if(config.useSSL) {
 		https.createServer(credentials, app)
 			 .listen(config.serverPort, config.serverHost, () => {
