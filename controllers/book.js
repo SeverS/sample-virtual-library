@@ -2,7 +2,7 @@ import models from '../models';
 
 const bookController = {
 	create(req, res, next) {
-		let bookProps = getBookProps(req);
+		const bookProps = bookController._getBookProps(req);
 		models.book.create(bookProps, (err, book) => {
 			// pass error to error handler middleware
 			if(err) return next(err);
@@ -18,7 +18,6 @@ const bookController = {
 	},
 	read(req, res, next) {
 		const bookId = req.params.id;
-		console.log(req.params)
 		models.book.findOneById(bookId).then(book => {
 			return res.status(200).send(book);
 		}).catch(err => {
@@ -27,10 +26,16 @@ const bookController = {
 	},
 	update(req, res, next) {
 		const bookId = req.params.id;
-		const bookProps = getBookProps(req);
+		const bookProps = bookController._getBookProps(req);
 
 		models.book.update({id: bookId}, bookProps).then(updatedBook => {
-			return res.status(200).send(book);
+			if(updatedBook.length === 0) {
+				return res.status(200).send({
+					ok: true,
+					message: `Sorry, book with id ${bookId} was not found`
+				});
+			}
+			return res.status(200).send(updatedBook);
 		}).catch(err => {
 			return next(err);
 		});
@@ -39,25 +44,23 @@ const bookController = {
 		const bookId = req.params.id;
 		models.book.destroy({id: bookId}).then(() => {
 			res.status(200).send({
-					ok: true, 
-					message: `book with id: ${bookId} deleted.`
+				ok: true,
+				message: `book with id: ${bookId} deleted.`
 			});
 		}).catch(err => {
 			return next(err);
 		})
+	},
+	// return only supported fields
+	_getBookProps(req) {
+		return {
+			name: req.body.name,
+			author: req.body.author,
+			type: req.body.type,
+			description: req.body.description,
+			isbn: req.body.description
+		};
 	}
 }
 
-// return only supported fields
-function getBookProps(req) {
-	
-	return {
-		name,
-		author,
-		type,
-		description,
-		isbn
-	} = req.body;
-
-}
 export default bookController;

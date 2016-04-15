@@ -10,6 +10,12 @@ clone this repo and `npm install`
 
 use `config/default.json5` for development and override them in production(.json5)
 
+## Api Authorization
+
+1. Create a user
+2. Copy the generated apikey
+3. For POST, PUT, DELETE methods you must set the headers `Access-Control-Request-Headers: X-Api-Key` and `X-Api-Key: <your api key>`
+
 ## API Endpoints
 
 | Endpoint                     |    method   |  description                       |
@@ -23,3 +29,8 @@ use `config/default.json5` for development and override them in production(.json
 | /v1/book/:id                 |    PUT      |                                    |
 | /v1/book                     |    DELETE   |                                    |
 
+
+## Roadmap
+	• filter books by author, type
+	• add validators
+	• write tests
