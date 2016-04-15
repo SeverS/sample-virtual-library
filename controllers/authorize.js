@@ -26,7 +26,7 @@ function autorize(req, res, next) {
 
 		});
 	} else {
-		return res.status(200).send({ok:true, message: 'in the near future you will not have access!! :)'});
+		return next();
 	}
 
 }
