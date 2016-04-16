@@ -34,16 +34,16 @@ or you can use the Postman collection inside this repo.
 
 ## Entities
 
-• Client
-	• name: <required>
-	• password: <required>
-	• apikey: <auto generated>
-• Book
-	• name: <required>
-	• author: <required>
-	• type: <required> one of 'ebook', 'paperback', 'hardcover' or 'audio'
-	• description: <optional>
-	• isbn: <optional>
+**Client**
+	• name: `<required>`
+	• password: `<required>`
+	• apikey: `<auto generated>`
+**Book**
+	• name: `<required>`
+	• author: `<required>`
+	• type: `<required>` one of `'ebook', 'paperback', 'hardcover'` or `'audio'`
+	• description: `<optional>`
+	• isbn: `<optional>`
 
 ## Roadmap
 	• tests
