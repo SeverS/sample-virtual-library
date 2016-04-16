@@ -38,6 +38,7 @@ or you can use the Postman collection inside this repo.
   - name: `<required>`
   - password: `<required>`
   - apikey: `<auto generated>`
+
 **Book**
   - name: `<required>`
   - author: `<required>`
