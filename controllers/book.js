@@ -1,5 +1,4 @@
-
-import _ from 'lodash';
+import formatUtils from '../utils/format-utils';
 import models from '../models';
 
 const bookController = {
@@ -14,7 +13,7 @@ const bookController = {
 	list(req, res, next) {
 		const query = models.book.find();
 
-		bookController._populateQuery(query, req.query).then(results => {
+		formatUtils.formatQuery(query, req.query).then(results => {
 			res.status(200).json(results);
 		}).catch(e => {
 			const err = e && e.stack;
@@ -60,27 +59,6 @@ const bookController = {
 		}).catch(err => {
 			return next(err);
 		})
-	},
-
-	_populateQuery(query, options) {
-		const parsedOptions = _.defaults(options, {
-			sortBy: 'id',
-			sortOrder: 'asc',
-			pageSize: -1,
-			page: 1
-		});
-
-		return Promise.resolve().then(() => {
-			if(options.where) {
-				return JSON.parse(options.where);
-			}
-		}).then(parsedWhere => {
-			parsedOptions.where = parsedWhere || {};
-			return query.where(parsedOptions.where)
-				.limit(parsedOptions.pageSize)
-				.skip((parsedOptions.page - 1) * parsedOptions.pageSize)
-				.sort(parsedOptions.sortBy + ' ' + parsedOptions.sortOrder);
-		});
 	}
 }
 

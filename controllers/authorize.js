@@ -48,7 +48,6 @@ function autorize(req, res, next) {
 		}
 
 	} else {
-		console.log('authorize let request pass');
 		// we are a public library so you can get and list books freely :)
 		res.header("Access-Control-Allow-Origin", req.headers.origin);
 		res.header("Allow", "GET");

@@ -10,7 +10,6 @@ import fileStreamRotator from 'file-stream-rotator';
 import morgan from 'morgan';
 // configuration library
 import config from 'config';
-import debug from 'debug';
 // routes
 import router from './router';
 import errorHandler from 'errorhandler';
@@ -34,12 +33,14 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+
+
 app.use(`/${config.api.prefix}/book`, authorizationController);
 
 // mount router middleware
 app.use(`/${config.api.prefix}`, router);
 
-app.use(errorHandler({log: errorLogger}));
+app.use(errorLogger);
 
 const credentials = {
   key: fs.readFileSync('certificates/private.pem'),

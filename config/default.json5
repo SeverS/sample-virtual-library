@@ -36,5 +36,6 @@
 		 *	 drop - wipe/drop ALL my data and rebuild models every time I start server
 		 */
 		migrate: 'alter'
-	}
+	},
+	env: 'development'
 }

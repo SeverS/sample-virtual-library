@@ -1,3 +1,18 @@
 {
-	serverPort: 80
+	serverPort: 443,
+	useSSL: true,
+	api: {
+		prefix: 'v1',
+		minUsernameLength: 4, // don`t allow very short usernames
+		minPasswordLength: 8,
+		authorizeRequests: true,
+		uniqueBookNames: true,
+		secret: 'p.r.o.d.u.c.t.i.o.n',
+	},
+	apiPrefix: '/v1/',
+	orm: {
+		defaultConnection: 'localMysql',
+		migrate: 'safe'
+	},
+	env: 'production'
 }
