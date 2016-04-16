@@ -13,23 +13,47 @@ export default function Authorization(req, res, next) {
 
 function autorize(req, res, next) {
 	// verify if it`s preflight request
-	if(req.method === 'OPTIONS' && req.headers['access-control-request-headers'] === 'x-api-key') {
-		// verify api key
-		res.header("Access-Control-Allow-Origin", req.headers.origin);
-		res.header("Access-Control-Allow-Headers", `Origin, X-Requested-With, Content-Type, Accept, ${req.headers['access-control-request-header']}`);
-	} else if(req.method !== 'GET' && req.headers['x-api-key']){
-		// assuming that post, put, delete requests must be authorized
-		models.client.findByApikey(req.headers['x-api-key'], (err, client) => {
-			if(err || client.length === 0) {
-				return res.status(401).send('unauthorized');
-			} else {
+	if(req.method === 'OPTIONS') {
+		if(req.headers['access-control-request-method'] !== 'GET') {
+			if(req.headers['access-control-request-headers'].indexOf('x-api-key') != -1) {
 				res.header("Access-Control-Allow-Origin", req.headers.origin);
-	  			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Api-Key");
+				res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Cache-Control, Accept, X-Api-Key");
 				return next();
+			} else {
+				// unauthorized
+				return res.status(401).json({success: true, message: 'unauthorized'});
 			}
-		});
+		} else {
+			//allow get requests without authorization
+			res.header("Access-Control-Allow-Origin", req.headers.origin);
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Cache-Control, Accept, X-Api-Key");
+			res.header("Allow", "GET");
+			return next();
+		}
+	} else if(req.method !== 'GET') {
+		// assuming that post, put, delete requests must be authorized
+		if(req.headers['x-api-key']) {
+			models.client.findByApikey(req.headers['x-api-key'], (err, client) => {
+				if(err || client.length === 0) {
+					return res.status(401).json({success: true, message: 'unauthorized'});
+				} else {
+					res.header("Access-Control-Allow-Origin", req.headers.origin);
+		  			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-api-key");
+					return next();
+				}
+			});
+
+		} else {
+			return res.status(401).json({success: true, message: 'unauthorized'})
+		}
+
+	} else {
+		console.log('authorize let request pass');
+		// we are a public library so you can get and list books freely :)
+		res.header("Access-Control-Allow-Origin", req.headers.origin);
+		res.header("Allow", "GET");
+		return next();
 	}
-	// we are a public library so you can get and list books freely :)
-	return next();
+
 }
 

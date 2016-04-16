@@ -11,15 +11,16 @@ let Book = Waterline.Collection.extend({
 			required: true,
 			unique: config.api.uniqueBookNames
 		},
-		description: 'string',
 		author: {
 			type: 'string',
 			required: true
 		},
 		type: {
 			type: 'string',
+			enum: ['ebook', 'paperback', 'hardcover', 'audio'],
 			required: true
 		},
+		description: 'string',
 		isbn: 'string'
 }
 });

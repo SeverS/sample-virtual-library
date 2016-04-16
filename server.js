@@ -15,6 +15,7 @@ import debug from 'debug';
 import router from './router';
 import errorHandler from 'errorhandler';
 import errorLogger from './utils/error-logger';
+import authorizationController from './controllers/authorize';
 
 const accessLog = fileStreamRotator.getStream({
     filename: `logs/access-log-%DATE%.log`,
@@ -32,6 +33,8 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 app.use(bodyParser.json());
+
+app.use(`/${config.api.prefix}/book`, authorizationController);
 
 // mount router middleware
 app.use(`/${config.api.prefix}`, router);

@@ -16,6 +16,8 @@ use `config/default.json5` for development and override them in production(.json
 2. Copy the generated apikey
 3. For POST, PUT, DELETE methods you must set the headers `Access-Control-Request-Headers: X-Api-Key` and `X-Api-Key: <your api key>`
 
+or you can use the Postman collection inside this repo.
+
 ## API Endpoints
 
 | Endpoint                     |    method   |  description                       |
@@ -31,6 +33,5 @@ use `config/default.json5` for development and override them in production(.json
 
 
 ## Roadmap
-	• filter books by author, type
 	• add validators
 	• write tests
