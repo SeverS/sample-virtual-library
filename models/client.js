@@ -13,6 +13,7 @@ let Client = Waterline.Collection.extend({
 		username: {
 			type: 'string',
 			required: true,
+            unique: true,
 			minLength: config.api.minUsernameLength
 		},
 		password: {
