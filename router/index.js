@@ -10,13 +10,12 @@ router.route('/client')
 
 // book endpoints
 router.route('/book')
-	// .all(controllers.authorizationController)
-	.post(controllers.bookController.create)
+	.post(controllers.authorizationController, controllers.bookController.create)
 	.get(controllers.bookController.list);
 
 router.route('/book/:id')
-	.put(controllers.bookController.update)
-	.delete(controllers.bookController.destroy)
+	.put(controllers.authorizationController, controllers.bookController.update)
+	.delete(controllers.authorizationController, controllers.bookController.destroy)
 	.get(controllers.bookController.read)
 
 export default router;
